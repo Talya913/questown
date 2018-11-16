@@ -1,13 +1,19 @@
-<application>
-  <component name="GitRememberedInputs">
-    <option name="visitedUrls">
-      <list>
-        <UrlAndUserName>
-          <option name="url" value="https://github.com/Talya913/questown.git" />
-          <option name="userName" value="" />
-        </UrlAndUserName>
-      </list>
-    </option>
-    <option name="cloneParentDir" value="C:\Users\TEMP.SPB.002\PycharmProjects" />
-  </component>
-</application>
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
+@app.route('/projects/')
+def projects():
+    return 'The project page'
+
+@app.route('/about')
+def about():
+    return 'The about page'
+
+if __name__ == '__main__':
+    app.run()
