@@ -4,87 +4,98 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Slider - Range slider</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#price_range" ).slider({
+      range: true,
+      min: 0,
+      max: 2000,
+      values: [ 0, 500 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "₽" + ui.values[ 0 ] + " - ₽" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "₽" + $( "#price_range" ).slider( "values", 0 ) +
+      " - ₽" + $( "#price_range" ).slider( "values", 1 ) );
+  } );
+  </script>
 </head>
 <body>
-      <div class="alert alert-primary" align="center" role="alert" >
-   <strong> QUESTOWN </strong>
+    <div class="alert alert-primary" align="center" role="alert" >
+        <strong> QUESTOWN </strong>
     </div>
 
     <div style="text-align: center;"><h1>Choose your Best Quest!</h1></div>
     <div style="text-align: center;"><p1>Our progressive system will find for you perfect people for lonely evenings. Make some Quest right now!</p1></div>
 
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+    <form class="form-horizontal">
+        <fieldset>
 
-<form class="form-horizontal">
-<fieldset>
 
-<hr width=1 align="center">
+            <hr width=1 align="center">
 
-<!-- Text input-->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="preferences">Key preferences:</label>
-  <div class="col-md-4">
-  <input id="preferences" name="Your preferences" type="text" placeholder="Type keywords" class="form-control input-md">
-  </div>
-</div>
 
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="city">Сity:</label>
-  <div class="col-md-4">
-    <select id="city" name="City" class="Type your city">
-      <option value="1">Saint-Petersburg</option>
-      <option value="2">Moscow</option>
-    </select>
-  </div>
-</div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="preferences">Key preferences:</label>
+                <div class="col-md-4">
+                    <input id="preferences" name="Your preferences" type="text" placeholder="Type keywords" class="form-control input-md">
+                </div>
+            </div>
 
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="subway_station">Subway:</label>
-  <div class="col-md-4">
-    <select id="subway_station" name="subway_station" class="form-control">
-      <option value="1">Lomonosovskaya</option>
-      <option value="2">Vosstaniya</option>
-    </select>
-  </div>
-</div>
 
-<!-- Select Basic -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="price_min">Price range:</label>
-  <div class="col-md-2">
-    <select id="price_min" name="price_min" class="form-control">
-      <option value="1">100-1000 RUB</option>
-      <option value="2">1000 - 2000 RUB</option>
-    </select>
-  </div>
-</div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="city">City:</label>
+                <div class="col-md-2">
+                    <select id="city" name="City" class="form-control">
+                        <option value="1">Saint-Petersburg</option>
+                        <option value="2">Moscow</option>
+                    </select>
+                </div>
+            </div>
 
-<div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic"></label>
-  <div class="col-md-2">
-    <select id="selectbasic" name="selectbasic" class="form-control">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
-    </select>
-  </div>
-</div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="subway_station">Subway:</label>
+                <div class="col-md-4">
+                    <select id="subway_station" name="subway_station" class="selectpicker form-control" multiple data-max-options="50">
+                        <option value="1">Lomonosovskaya</option>
+                        <option value="2">Vosstaniya</option>
+                    </select>
+                </div>
+            </div>
 
-<!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="submit"></label>
-  <div class="col-md-4">
-    <button id="submit" name="submit" class="btn btn-primary">Search</button>
-  </div>
-</div>
 
-</fieldset>
-</form>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="amount">Price range:</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                <div class="col-md-4" id="price_range"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="submit"></label>
+                <div class="col-md-4">
+                    <button id="submit" name="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
 
 </body>
 
