@@ -24,6 +24,3 @@ _users = {
         'preferences': 'Sedova, toys'
     }
 }
-
-def get_user(username):
-    return _users.get(username)
