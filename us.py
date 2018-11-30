@@ -2,30 +2,37 @@ from typing import Dict
 
 _users = {
     'luap': {
+        'login': 'wow',
         'name': 'Luap',
         'gender': 'f',
         'city': 'Saint-Petersburg',
         'preferences': 'liquor, party'
     },
     'rec': {
+        'login': 'kek2001',
         'name': 'Rec',
         'gender': 'm',
         'city': 'Moscow',
         'preferences': 'brandy, party'
     },
     'busya': {
+        'login': 'lolka666',
         'name': 'Busya',
         'gender': 'm',
         'city': 'Saint-Petersburg',
         'preferences': 'Sedova, water'
     },
     'juja': {
+        'login': 'mushka1977',
         'name': 'Juja',
         'gender': 'f',
         'city': 'Saint-Petersburg',
         'preferences': 'Sedova, toys'
     }
 }
+
+
+
 
 _user_list = []
 
