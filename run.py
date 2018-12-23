@@ -1,40 +1,4 @@
-import sqlite3
-
-import us
-from flask import Flask, flash, redirect, url_for
-from flask import render_template
-from flask import request
-from forms import RegistrationForm, LoginForm
-
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'SedovianDog'
-
-
-@app.route('/')
-def home():
-    return render_template('page1.html')
-
-
-@app.route('/register', methods = ['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('home'))
-    return render_template('register.html', title = 'Register', form = form)
-
-
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    form = LoginForm()
-    #if form.validate_on_submit():
-        #if
-            #flash('Log in is successful!', 'success')
-            #return redirect(url_for('home'))
-        #else:
-            #flash('Access is denied. Incorrect email or password.', 'danger')
-    return render_template('login.html', title = 'Login', form = form)
+from questown import app
 
 
 #@app.route('/search')
