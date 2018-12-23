@@ -16,7 +16,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(40), nullable=False)
     gender = db.Column(db.String(2), default='')
     age = db.Column(db.Integer, default='')
-    groups = db.relationship('Groups', backref='initiator', lazy=True)
+    groups = db.relationship('Groups', backref='participates', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.gender}', '{self.age}', '{self.preferences}', '{self.current_groups})"
@@ -31,7 +31,9 @@ class Groups(db.Model):
     pref_afterparty = db.Column(db.Boolean)
     pref_sociable = db.Column(db.Boolean)
     pref_crazy = db.Column(db.Boolean)
-    inviter = db.Column(db.String(20), db.ForeignKey('users.id'), nullable='False')
+    pref_age_min = db.Column(db.Integer)
+    pref_age_max = db.Column(db.Integer)
+    participants = db.Column(db.String(120), db.ForeignKey('users.id'), nullable='False')
 
 
 class Quests(db.Model):
@@ -39,3 +41,11 @@ class Quests(db.Model):
     name = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     groups = db.Column(db.String(120))
+    feat_adventure = db.column(db.Boolean)
+    feat_horror = db.column(db.Boolean)
+    feat_logic = db.column(db.Boolean)
+    feat_intelligent = db.column(db.Boolean)
+    feat_silly = db.column(db.Boolean)
+    feat_dirty = db.column(db.Boolean)
+    feat_romantic = db.column(db.Boolean)
+    feat_drama = db.column(db.Boolean)
