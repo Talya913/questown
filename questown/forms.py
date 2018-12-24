@@ -64,12 +64,12 @@ class UpdateAccountForm(FlaskForm):
         validators.email()
     ])
     gender = SelectField('Gender',
-                         choices=['Male', 'Female', 'Not answered'])
+                         choices=[('---', '---'), ('Male', 'Male'), ('Female', 'Female')])
     age = IntegerField('Age (in years)', [
         validators.NumberRange(min=1, max=100)
     ])
     about = StringField('About yourself', [
-        validators.length(max=5000)
+        validators.length(max=1000)
     ])
     picture = FileField('Update profile picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
