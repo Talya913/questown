@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField, ValidationError, widgets, SelectField, IntegerField
 from questown.models import Users
 from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
+from wtforms_sqlalchemy.fields import QuerySelectField
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [
@@ -61,6 +63,14 @@ class UpdateAccountForm(FlaskForm):
         validators.data_required(),
         validators.email()
     ])
+    gender = SelectField('Gender',
+                         choices=['Male', 'Female', 'Not answered'])
+    age = IntegerField('Age (in years)', [
+        validators.NumberRange(min=1, max=100)
+    ])
+    about = StringField('About yourself', [
+        validators.length(max=5000)
+    ])
     picture = FileField('Update profile picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
 
@@ -75,3 +85,12 @@ class UpdateAccountForm(FlaskForm):
             user = Users.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Sorry, that email is already taken')
+
+
+#def choice_query():
+ #   return Choice.query
+
+
+#class GroupForm(FlaskForm):
+ #   gender = QuerySelectField(query_factory=Choice.query, allow_blank=True)
+    #age_min = QuerySelectField()
