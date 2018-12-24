@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField, ValidationError
 from questown.models import Users
+from flask_login import current_user
+from flask_wtf.file import FileField, FileAllowed
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [
@@ -45,3 +47,31 @@ class LoginForm(FlaskForm):
     ])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Log In')
+
+
+class UpdateAccountForm(FlaskForm):
+    username = StringField('Username', [
+        validators.data_required(),
+        validators.length(min=2, max=15)
+    ])
+    name = StringField('Name', [
+        validators.data_required()
+    ])
+    email = StringField('Email', [
+        validators.data_required(),
+        validators.email()
+    ])
+    picture = FileField('Update profile picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Update')
+
+    def validate_username(self, username):
+        if username.data != current_user.username:
+            user = Users.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError('Sorry, that username is already taken')
+
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            user = Users.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError('Sorry, that email is already taken')

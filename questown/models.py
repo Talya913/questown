@@ -12,7 +12,7 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(40), nullable=False)
     gender = db.Column(db.String(2), default='')
     age = db.Column(db.Integer, default='')
