@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, SubmitField, validators, Boolean
 from questown.models import Users
 from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
-from wtforms_sqlalchemy.fields import QuerySelectField
 
 
 class RegistrationForm(FlaskForm):
@@ -100,6 +99,7 @@ class QuestSearchForm(FlaskForm):
     romantic = SelectField('Romantic', choices=choice)
     silly = SelectField('Silly', choices=choice)
     search = StringField('Type a part of the title (if you want to)')
+    submit = SubmitField('Search')
 
 
 

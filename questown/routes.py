@@ -3,6 +3,7 @@ from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, Quest
 from questown.models import Users, Groups, Quests
 from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
+from models
 import secrets
 import os
 
@@ -16,10 +17,7 @@ def home():
     form = QuestSearchForm()
     if request.method == 'POST':
         return redirect(url_for('search_results'))
-    return render_template('home.html')
-
-
-@app.route
+    return render_template('page1(1).html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
