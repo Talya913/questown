@@ -19,6 +19,9 @@ def home():
     return render_template('home.html')
 
 
+@app.route
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
