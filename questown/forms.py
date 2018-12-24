@@ -87,6 +87,22 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Sorry, that email is already taken')
 
 
+choice = [('', ''), (1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+
+
+class QuestSearchForm(FlaskForm):
+    adventure = SelectField('Adventure', choices=choice)
+    dirty = SelectField('Dirty', choices=choice)
+    drama = SelectField('Drama', choices=choice)
+    horror = SelectField('Horror', choices=choice)
+    intelligent = SelectField('Intelligent', choices=choice)
+    logic = SelectField('Logic', choices=choice)
+    romantic = SelectField('Romantic', choices=choice)
+    silly = SelectField('Silly', choices=choice)
+    search = StringField('Type a part of the title (if you want to)')
+
+
+
 #def choice_query():
  #   return Choice.query
 

@@ -15,12 +15,9 @@ class Users(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(40), nullable=False)
     gender = db.Column(db.String(10), default='---')
-    age = db.Column(db.Integer, default='')
-    about = db.Column(db.String(1000), default='I am new at this app and will write something here soon.')
+    age = db.Column(db.Integer, default=1)
+    about = db.Column(db.String(1000), default='I am new here and will write something here soon.')
     groups = db.relationship('Groups', backref='participates', lazy=True)
-
-#    def __repr__(self):
-#        return f"User('{self.username}', '{self.gender}', '{self.age}', '{self.preferences}', '{self.current_groups})"
 
 
 class Groups(db.Model):

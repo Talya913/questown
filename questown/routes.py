@@ -1,19 +1,22 @@
 from flask import flash, redirect, url_for, render_template, request
-from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from questown.models import Users, Groups
+from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, QuestSearchForm
+from questown.models import Users, Groups, Quests
 from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 import os
 
 
-db.drop_all()
-db.create_all()
+#db.drop_all()
+#db.create_all()
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('page1.html')
+    form = QuestSearchForm()
+    if request.method == 'POST':
+        return redirect(url_for('search_results'))
+    return render_template('home.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -91,8 +94,8 @@ def account():
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 
-@app.route('/user/<username>')
-def user(username):
-    user = Users.query.filter_by(username=username).first_or_404()
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('userpage.html', user=user, image_file=image_file, title=username)
+@app.route('/user/<int:user_id>')
+def user(user_id):
+    user = Users.query.get_or_404(user_id)
+    image_file = url_for('static', filename='profile_pics/' + user.image_file)
+    return render_template('userpage.html', user=user, image_file=image_file, title=user_id)
