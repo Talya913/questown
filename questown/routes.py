@@ -7,8 +7,8 @@ import secrets
 import os
 
 
-db.drop_all()
-db.create_all()
+#db.drop_all()
+#db.create_all()
 
 
 @app.route('/', methods=['GET', 'POST'])
