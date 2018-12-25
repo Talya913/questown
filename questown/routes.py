@@ -21,9 +21,6 @@ def home():
     return render_template('page1(1).html', form=searchform)
 
 
-fun = [['Best'], ]
-
-
 @app.route('/results')
 def search_results():
     searchform = QuestSearchForm()
