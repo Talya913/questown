@@ -7,6 +7,23 @@
 </head>
 <body>
 
+    <div class="alert alert-primary" align="center" role="alert" >
+        <a href = "{{ url_for('home') }}"><strong>QUESTOWN</strong></a>
+    </div>
+
+    <main role="main" class="container">
+        <div class="row">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </main>
+
+
     <img src="{{ image_file }}">
     <div class="media=-body">
         <h2 class="">{{ current_user.username }}</h2>
