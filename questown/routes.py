@@ -15,19 +15,20 @@ db.create_all()
 @app.route('/', methods=['GET', 'POST'])
 def home():
     search = QuestSearchForm(request.form)
+    quests = Quests.query
+
     if request.method == 'POST':
+        if search.search.data != '':
+            quests = quests.filter(Quests.name.like('%' + search.search.data + '%'))
+            return search_results(quests)
+        quests = quests.order_by(Quests.name).all
         return search_results()
-    return render_template('page1(1).html', form=search)
+    return render_template('page1(1).html', form=search, quests=quests)
 
 
 @app.route('/results')
 def search_results():
-    search = QuestSearchForm()
-    quests = Quests.query
-    if search.search.data != '':
-        quests = quests.filter(Quests.name.like('%' + search.search.data + '%'))
-        return search_results(quests)
-    quests = quests.order_by(Quests.name).all
+    quests = request.args.get('quests')
     return render_template('search_results.html', quests=quests)
 
 
