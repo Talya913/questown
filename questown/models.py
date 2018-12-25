@@ -48,6 +48,5 @@ class Quests(db.Model):
     feat_dirty = db.Column(db.String(20))
     feat_romantic = db.Column(db.String(20))
     feat_drama = db.Column(db.String(20))
-    genres = db.Column(db.String(200))
 
 

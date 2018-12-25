@@ -6,14 +6,11 @@
     <title>Search</title>
 </head>
 <body>
-
+You searched for
     <ul>
-        {% for quests in quests %}
+        {% for quest in quests %}
         <li>
-        <h4><a href="/quest/<int:quest_id>">{{ quests.name }}</a>
-        <a class="btn btn-success" href="/editcourse?id={{course.id}}">Book</a>
-        <a class="btn btn-info" href="/editcourse?id={{course.id}}">Edit</a>
-        <a class="btn btn-danger" href="/deletecourse?id={{course.id}}">Delete</a></h4>
+        <h4><a href="/quest/<int:quest_id>">{{ quest.name }}</a>
         </li>
         {% endfor %}
     </ul>
