@@ -17,7 +17,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(40), nullable=False)
     gender = db.Column(db.String(10), default='---')
     age = db.Column(db.Integer, default=1)
-    about = db.Column(db.String(1000), default='I am new here and will write something here soon.')
+    about = db.Column(db.String(1000), default='I am new here and will write something about me soon.')
     groups = db.relationship('Groups', backref='participates', lazy=True)
 
 
