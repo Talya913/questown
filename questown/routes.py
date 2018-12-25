@@ -134,8 +134,8 @@ def search_results():
     quests = Search.query
     if searchform.search.data != '':
         quests = quests.filter(Search.name.like('%' + searchform.search.data + '%')
-                               .order_by(Search.rating.tostring))
-    quests = quests.order_by(Search.rating.tostring).all()
+                               .order_by(Search.rating.tostring()))
+    quests = quests.order_by(Search.rating.tostring()).all()
     return render_template('search_results.html', quests=quests)
 
 
