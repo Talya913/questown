@@ -1,8 +1,9 @@
 from flask import flash, redirect, url_for, render_template, request
 from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, QuestSearchForm
-from questown.models import Users, Groups, Quests
+from questown.models import Users, Quests, Search
 from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
+import numpy as np
 import secrets
 import os
 from sqlalchemy import or_
@@ -20,16 +21,137 @@ def home():
     return render_template('page1(1).html', form=searchform)
 
 
+fun = [['Best'], ]
+
+
 @app.route('/results')
 def search_results():
     searchform = QuestSearchForm()
-    quests = Quests.query
 
-    if searchform.validate_on_submit():
-        quests = quests.filter(Quests.name.like('%' + searchform.search.data + '%'))
-
-    quests = quests.order_by(Quests.name).all()
+    Search.name = Quests.name
+    Search.description = Quests.description
+    Search.feat_adventure = Quests.feat_adventure
+    Search.feat_dirty = Quests.feat_dirty
+    Search.feat_drama = Quests.feat_drama
+    Search.feat_horror = Quests.feat_horror
+    Search.feat_intelligent = Quests.feat_intelligent
+    Search.feat_logic = Quests.feat_logic
+    Search.feat_silly = Quests.feat_silly
+    Search.feat_romantic = Quests.feat_romantic
+    Search.pref_adventure = searchform.adventure.data
+    Search.pref_dirty = searchform.dirty.data
+    Search.pref_drama = searchform.drama.data
+    Search.pref_horror = searchform.horror.data
+    Search.pref_intelligent = searchform.intelligent.data
+    Search.pref_logic = searchform.logic.data
+    Search.pref_silly = searchform.silly
+    Search.pref_romantic = searchform.romantic
+    Search.rating = np.where(
+        Search.pref_adventure == 1, Search.rating + Search.feat_adventure * (-10), np.where(
+            Search.pref_adventure == 2, Search.rating + Search.feat_adventure * (-5), np.where(
+                Search.pref_adventure == 3, Search.rating + Search.feat_adventure * 1, np.where(
+                    Search.pref_adventure == 4, Search.rating + Search.feat_adventure * 4, np.where(
+                        Search.pref_adventure == 5, Search.rating + Search.feat_adventure * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_dirty == 1, Search.rating + Search.feat_dirty * (-10), np.where(
+            Search.pref_dirty == 2, Search.rating + Search.feat_dirty * (-5), np.where(
+                Search.pref_dirty == 3, Search.rating + Search.feat_dirty * 1, np.where(
+                    Search.pref_dirty == 4, Search.rating + Search.feat_dirty * 4, np.where(
+                        Search.pref_dirty == 5, Search.rating + Search.feat_dirty * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_drama == 1, Search.rating + Search.feat_drama * (-10), np.where(
+            Search.pref_drama == 2, Search.rating + Search.feat_drama * (-5), np.where(
+                Search.pref_drama == 3, Search.rating + Search.feat_drama * 1, np.where(
+                    Search.pref_drama == 4, Search.rating + Search.feat_drama * 4, np.where(
+                        Search.pref_drama == 5, Search.rating + Search.feat_drama * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_horror == 1, Search.rating + Search.feat_horror * (-10), np.where(
+            Search.pref_horror == 2, Search.rating + Search.feat_horror * (-5), np.where(
+                Search.pref_horror == 3, Search.rating + Search.feat_horror * 1, np.where(
+                    Search.pref_horror == 4, Search.rating + Search.feat_horror * 4, np.where(
+                        Search.pref_horror == 5, Search.rating + Search.feat_horror * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_intelligent == 1, Search.rating + Search.feat_intelligent * (-10), np.where(
+            Search.pref_intelligent == 2, Search.rating + Search.feat_intelligent * (-5), np.where(
+                Search.pref_intelligent == 3, Search.rating + Search.feat_intelligent * 1, np.where(
+                    Search.pref_intelligent == 4, Search.rating + Search.feat_intelligent * 4, np.where(
+                        Search.pref_intelligent == 5, Search.rating + Search.feat_intelligent * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_logic == 1, Search.rating + Search.feat_logic * (-10), np.where(
+            Search.pref_logic == 2, Search.rating + Search.feat_logic * (-5), np.where(
+                Search.pref_logic == 3, Search.rating + Search.feat_logic * 1, np.where(
+                    Search.pref_logic == 4, Search.rating + Search.feat_logic * 4, np.where(
+                        Search.pref_logic == 5, Search.rating + Search.feat_logic * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_silly == 1, Search.rating + Search.feat_silly * (-10), np.where(
+            Search.pref_silly == 2, Search.rating + Search.feat_silly * (-5), np.where(
+                Search.pref_silly == 3, Search.rating + Search.feat_silly * 1, np.where(
+                    Search.pref_silly == 4, Search.rating + Search.feat_silly * 4, np.where(
+                        Search.pref_silly == 5, Search.rating + Search.feat_silly * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    Search.rating = np.where(
+        Search.pref_romantic == 1, Search.rating + Search.feat_romantic * (-10), np.where(
+            Search.pref_romantic == 2, Search.rating + Search.feat_romantic * (-5), np.where(
+                Search.pref_romantic == 3, Search.rating + Search.feat_romantic * 1, np.where(
+                    Search.pref_romantic == 4, Search.rating + Search.feat_romantic * 4, np.where(
+                        Search.pref_romantic == 5, Search.rating + Search.feat_romantic * 7, Search.rating
+                    )
+                )
+            )
+        )
+    )
+    quests = Search.query
+    if searchform.search.data != '':
+        quests = quests.filter(Search.name.like('%' + searchform.search.data + '%')
+                               .order_by(Search.rating.tostring))
+    quests = quests.order_by(Search.rating.tostring).all()
     return render_template('search_results.html', quests=quests)
+
+
+# @app.route('/results')
+# def search_results():
+#     searchform = QuestSearchForm()
+#     quests = Quests.query
+#
+#     if searchform.validate_on_submit():
+#         quests = quests.filter(Quests.name.like('%' + searchform.search.data + '%'))
+#
+#     quests = quests.order_by(Quests.name).all()
+#     return render_template('search_results.html', quests=quests)
 
 
 @app.route('/register', methods=['GET', 'POST'])
