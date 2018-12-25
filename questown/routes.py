@@ -5,18 +5,30 @@ from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets
 import os
+from sqlalchemy import or_
 
 
 #db.drop_all()
-#db.create_all()
+db.create_all()
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    form = QuestSearchForm()
+    search = QuestSearchForm(request.form)
     if request.method == 'POST':
-        return redirect(url_for('search_results'))
-    return render_template('page1(1).html', form=form)
+        return search_results()
+    return render_template('page1(1).html', form=search)
+
+
+@app.route('/results')
+def search_results():
+    search = QuestSearchForm()
+    quests = Quests.query
+    if search.search.data != '':
+        quests = quests.filter(Quests.name.like('%' + search.search.data + '%'))
+        return search_results(quests)
+    quests = quests.order_by(Quests.name).all
+    return render_template('search_results.html', quests=quests)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -98,4 +110,11 @@ def account():
 def user(user_id):
     user = Users.query.get_or_404(user_id)
     image_file = url_for('static', filename='profile_pics/' + user.image_file)
-    return render_template('userpage.html', user=user, image_file=image_file, title=user_id)
+    return render_template('userpage.html', title=user.name, user=user, image_file=image_file)
+
+
+@app.route('/quest/<int:quest_id>')
+def quest(quest_id):
+    quest = Quests.query.get_or_404(quest_id)
+    image_file = url_for('static', filename='quest_pics/' + quest.image_file)
+    return render_template('questpage.html', title=quest.name, quest=quest, image_file=image_file)

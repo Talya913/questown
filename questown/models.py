@@ -2,6 +2,7 @@ from questown import db, login_manager
 from flask_login import UserMixin
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
@@ -38,6 +39,7 @@ class Quests(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     name = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='1.jpg')
     feat_adventure = db.Column(db.String(20))
     feat_horror = db.Column(db.String(20))
     feat_logic = db.Column(db.String(20))
@@ -46,5 +48,6 @@ class Quests(db.Model):
     feat_dirty = db.Column(db.String(20))
     feat_romantic = db.Column(db.String(20))
     feat_drama = db.Column(db.String(20))
+    genres = db.Column(db.String(200))
 
 

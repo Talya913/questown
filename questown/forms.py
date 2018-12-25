@@ -100,13 +100,3 @@ class QuestSearchForm(FlaskForm):
     silly = SelectField('Silly', choices=choice)
     search = StringField('Type a part of the title (if you want to)')
     submit = SubmitField('Search')
-
-
-
-#def choice_query():
- #   return Choice.query
-
-
-#class GroupForm(FlaskForm):
- #   gender = QuerySelectField(query_factory=Choice.query, allow_blank=True)
-    #age_min = QuerySelectField()

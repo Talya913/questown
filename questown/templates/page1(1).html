@@ -37,44 +37,52 @@
 
     <div style="text-align: center;"><p1>Расскажи нам о своих предпочтениях и наша сверхточная нейронная система, обученная британскими учеными выдаст тебе самые лучшие результаты. Поехали!</p1></div>
 
-    <div class = "form-group">
-        {{ form.adventure.label(class = "form-control-label") }}
-        {{ form.adventure(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.dirty.label(class = "form-control-label") }}
-        {{ form.dirty(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.drama.label(class = "form-control-label") }}
-        {{ form.drama(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.horror.label(class = "form-control-label") }}
-        {{ form.horror(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.intelligent.label(class = "form-control-label") }}
-        {{ form.intelligent(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.logic.label(class = "form-control-label") }}
-        {{ form.logic(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.romantic.label(class = "form-control-label") }}
-        {{ form.romantic(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.silly.label(class = "form-control-label") }}
-        {{ form.silly(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.search.label(class = "form-control-label") }}
-        {{ form.search(class = "form-control form-control-lg") }}
-    </div>
-    <div class = "form-group">
-        {{ form.submit(class = "btn btn-outline-info") }}
+    <div class = "content-section">
+        <form method = "POST" action = "">
+            {{ form.hidden_tag() }}
+            <fieldset class = "form-group">
+                <legend class = "border-bottom mb-4">Join us!</legend>
+                <div class = "form-group">
+                    {{ form.adventure.label(class = "form-control-label") }}
+                    {{ form.adventure(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.dirty.label(class = "form-control-label") }}
+                    {{ form.dirty(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.drama.label(class = "form-control-label") }}
+                    {{ form.drama(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.horror.label(class = "form-control-label") }}
+                    {{ form.horror(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.intelligent.label(class = "form-control-label") }}
+                    {{ form.intelligent(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.logic.label(class = "form-control-label") }}
+                    {{ form.logic(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.romantic.label(class = "form-control-label") }}
+                    {{ form.romantic(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.silly.label(class = "form-control-label") }}
+                    {{ form.silly(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.search.label(class = "form-control-label") }}
+                    {{ form.search(class = "form-control form-control-lg") }}
+                </div>
+            </fieldset>
+            <div class = "form-group">
+                    {{ form.submit(class = "btn btn-outline-info") }}
+            </div>
+        </form>
     </div>
 
 </body>
