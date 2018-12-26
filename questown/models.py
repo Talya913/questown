@@ -39,6 +39,7 @@ class Quests(db.Model):
     name = db.Column(db.String(20), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='1.jpg')
+    address = db.Column(db.String(50))
     feat_adventure = db.Column(db.Integer)
     feat_horror = db.Column(db.Integer)
     feat_logic = db.Column(db.Integer)

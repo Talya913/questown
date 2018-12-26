@@ -47,89 +47,49 @@ def home():
 #             np.array(Search.pref_adventure) == 2, np.array(Search.rating) + np.array(Search.feat_adventure) * (-5), np.where(
 #                 np.array(Search.pref_adventure) == 3, np.array(Search.rating) + np.array(Search.feat_adventure) * 1, np.where(
 #                     np.array(Search.pref_adventure) == 4, np.array(Search.rating) + np.array(Search.feat_adventure) * 4, np.where(
-#                         np.array(Search.pref_adventure) == 5, np.array(Search.rating) + np.array(Search.feat_adventure) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_adventure) == 5, np.array(Search.rating) + np.array(Search.feat_adventure) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_dirty) == 1, np.array(Search.rating) + np.array(Search.feat_dirty) * (-10), np.where(
 #             np.array(Search.pref_dirty) == 2, np.array(Search.rating) + np.array(Search.feat_dirty) * (-5), np.where(
 #                 np.array(Search.pref_dirty) == 3, np.array(Search.rating) + np.array(Search.feat_dirty) * 1, np.where(
 #                     np.array(Search.pref_dirty) == 4, np.array(Search.rating) + np.array(Search.feat_dirty) * 4, np.where(
-#                         np.array(Search.pref_dirty) == 5, np.array(Search.rating) + np.array(Search.feat_dirty) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_dirty) == 5, np.array(Search.rating) + np.array(Search.feat_dirty) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_drama) == 1, np.array(Search.rating) + np.array(Search.feat_drama) * (-10), np.where(
 #             np.array(Search.pref_drama) == 2, np.array(Search.rating) + np.array(Search.feat_drama) * (-5), np.where(
 #                 np.array(Search.pref_drama) == 3, np.array(Search.rating) + np.array(Search.feat_drama) * 1, np.where(
 #                     np.array(Search.pref_drama) == 4, np.array(Search.rating) + np.array(Search.feat_drama) * 4, np.where(
-#                         np.array(Search.pref_drama) == 5, np.array(Search.rating) + np.array(Search.feat_drama) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_drama) == 5, np.array(Search.rating) + np.array(Search.feat_drama) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_horror) == 1, np.array(Search.rating) + np.array(Search.feat_horror) * (-10), np.where(
 #             np.array(Search.pref_horror) == 2, np.array(Search.rating) + np.array(Search.feat_horror) * (-5), np.where(
 #                 np.array(Search.pref_horror) == 3, np.array(Search.rating) + np.array(Search.feat_horror) * 1, np.where(
 #                     np.array(Search.pref_horror) == 4, np.array(Search.rating) + np.array(Search.feat_horror) * 4, np.where(
-#                         np.array(Search.pref_horror) == 5, np.array(Search.rating) + np.array(Search.feat_horror) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_horror) == 5, np.array(Search.rating) + np.array(Search.feat_horror) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_intelligent) == 1, np.array(Search.rating) + np.array(Search.feat_intelligent) * (-10), np.where(
 #             np.array(Search.pref_intelligent) == 2, np.array(Search.rating) + np.array(Search.feat_intelligent) * (-5), np.where(
 #                 np.array(Search.pref_intelligent) == 3, np.array(Search.rating) + np.array(Search.feat_intelligent) * 1, np.where(
 #                     np.array(Search.pref_intelligent) == 4, np.array(Search.rating) + np.array(Search.feat_intelligent) * 4, np.where(
-#                         np.array(Search.pref_intelligent) == 5, np.array(Search.rating) + np.array(Search.feat_intelligent) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_intelligent) == 5, np.array(Search.rating) + np.array(Search.feat_intelligent) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_logic) == 1, np.array(Search.rating) + np.array(Search.feat_logic) * (-10), np.where(
 #             np.array(Search.pref_logic) == 2, np.array(Search.rating) + np.array(Search.feat_logic) * (-5), np.where(
 #                 np.array(Search.pref_logic) == 3, np.array(Search.rating) + np.array(Search.feat_logic) * 1, np.where(
 #                     np.array(Search.pref_logic) == 4, np.array(Search.rating) + np.array(Search.feat_logic) * 4, np.where(
-#                         np.array(Search.pref_logic) == 5, np.array(Search.rating) + np.array(Search.feat_logic) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_logic) == 5, np.array(Search.rating) + np.array(Search.feat_logic) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_silly) == 1, np.array(Search.rating) + np.array(Search.feat_silly) * (-10), np.where(
 #             np.array(Search.pref_silly) == 2, np.array(Search.rating) + np.array(Search.feat_silly) * (-5), np.where(
 #                 np.array(Search.pref_silly) == 3, np.array(Search.rating) + np.array(Search.feat_silly) * 1, np.where(
 #                     np.array(Search.pref_silly) == 4, np.array(Search.rating) + np.array(Search.feat_silly) * 4, np.where(
-#                         np.array(Search.pref_silly) == 5, np.array(Search.rating) + np.array(Search.feat_silly) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_silly) == 5, np.array(Search.rating) + np.array(Search.feat_silly) * 7, np.array(Search.rating))))))
 #     Search.rating = np.where(
 #         np.array(Search.pref_romantic) == 1, np.array(Search.rating) + np.array(Search.feat_romantic) * (-10), np.where(
 #             np.array(Search.pref_romantic) == 2, np.array(Search.rating) + np.array(Search.feat_romantic) * (-5), np.where(
 #                 np.array(Search.pref_romantic) == 3, np.array(Search.rating) + np.array(Search.feat_romantic) * 1, np.where(
 #                     np.array(Search.pref_romantic) == 4, np.array(Search.rating) + np.array(Search.feat_romantic) * 4, np.where(
-#                         np.array(Search.pref_romantic) == 5, np.array(Search.rating) + np.array(Search.feat_romantic) * 7, np.array(Search.rating)
-#                     )
-#                 )
-#             )
-#         )
-#     )
+#                         np.array(Search.pref_romantic) == 5, np.array(Search.rating) + np.array(Search.feat_romantic) * 7, np.array(Search.rating))))))
 #     quests = Search.query
 #     if searchform.search.data != '':
 #         quests = quests.filter(Search.name.like('%' + searchform.search.data + '%')
