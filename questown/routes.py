@@ -3,7 +3,6 @@ from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, Quest
 from questown.models import Users, Quests, Search, Groups
 from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
-from sqlalchemy import or_
 import numpy as np
 import secrets
 import os
