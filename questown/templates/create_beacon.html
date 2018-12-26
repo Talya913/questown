@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Questown - {{ title }}</title>
+</head>
+<body>
+
+    {% if current_user.is_authenticated %}
+        <li><a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a></li>
+        <li><a class="nav-item nav-link" href="{{ url_for('logout') }}">Log out</a></li>
+    {% else %}
+        <li><a class="nav-item nav-link" href="{{ url_for('login') }}">Log in</a></li>
+        <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
+    {% endif %}
+
+    <div class = "content-section">
+        <form method = "POST" action = "">
+            {{ form.hidden_tag() }}
+            <fieldset class = "form-group">
+                <legend class = "border-bottom mb-4">Let the party find you</legend>
+                <div class = "form-group">
+                    {{ form.gender.label(class = "form-control-label") }}
+                    {{ form.gender(class = "form-control form-control-lg") }}
+                </div>
+                <div class = "form-group">
+                    {{ form.agemin.label(class = "form-control-label") }}
+                    {% if form.agemin.errors %}
+                        {{ form.agemin(class = "form-control form-control-lg is-invalid") }}
+                        <div class = "invalid-feedback">
+                            {% for error in form.agemin.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.agemin(class = "form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class = "form-group">
+                    {{ form.agemax.label(class = "form-control-label") }}
+                    {% if form.agemax.errors %}
+                        {{ form.agemax(class = "form-control form-control-lg is-invalid") }}
+                        <div class = "invalid-feedback">
+                            {% for error in form.agemax.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.agemax(class = "form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class = "form-group">
+                {{ form.submit(class = "btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

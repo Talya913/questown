@@ -10,7 +10,7 @@ You searched for
     <ul>
         {% for quest in quests %}
         <li>
-        <h4><a href="/quest/<int:quest_id>">{{ quest.name }}</a>
+        <h4><a href="/quest/{{quest.id}}">{{ quest.name }}</a>
         </li>
         {% endfor %}
     </ul>

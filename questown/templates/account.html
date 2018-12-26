@@ -98,6 +98,11 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            {% for group in groups %}
+                {% if group.initiator == current_user.id %}
+            <a href="{{ url_for('update_beacon', group_id=group.id) }}">{{ group.quest_name }}</a>
+                {% endif %}
+            {% endfor %}
         </fieldset>
         <div class = "form-group">
             {{ form.submit(class = "btn btn-outline-info") }}

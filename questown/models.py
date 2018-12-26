@@ -18,21 +18,17 @@ class Users(db.Model, UserMixin):
     gender = db.Column(db.String(10), default='---')
     age = db.Column(db.Integer, default=1)
     about = db.Column(db.String(1000), default='I am new here and will write something about me soon.')
-    groups = db.relationship('Groups', backref='participates', lazy=True)
+    groups = db.relationship('Groups', backref='initiator', lazy=True)
 
 
 class Groups(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     quest_name = db.Column(db.String(20), nullable=False)
     quest_id = db.Column(db.Integer, db.ForeignKey('quests.id'), nullable=False)
-    pref_party = db.Column(db.String(10))
-    pref_drunk = db.Column(db.String(10))
-    pref_afterparty = db.Column(db.String(10))
-    pref_sociable = db.Column(db.String(10))
-    pref_crazy = db.Column(db.String(10))
-    pref_age_min = db.Column(db.Integer, default=1)
-    pref_age_max = db.Column(db.Integer, default=100)
-    participants = db.Column(db.String(120), db.ForeignKey('users.id'), nullable='False')
+    gender = db.Column(db.String(10), default='---')
+    agemin = db.Column(db.Integer)
+    agemax = db.Column(db.Integer)
+    participants = db.Column(db.Integer, db.ForeignKey('users.id'), nullable='False')
 
 
 class Quests(db.Model):

@@ -1,6 +1,6 @@
-from flask import flash, redirect, url_for, render_template, request
-from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, QuestSearchForm
-from questown.models import Users, Quests, Search
+from flask import flash, redirect, url_for, render_template, request, abort
+from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, QuestSearchForm, GroupForm
+from questown.models import Users, Quests, Search, Groups
 from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 import numpy as np
@@ -20,134 +20,134 @@ def home():
     return render_template('page1(1).html', form=searchform)
 
 
-@app.route('/results')
-def search_results():
-    searchform = QuestSearchForm()
-
-    Search.name = Quests.name
-    Search.description = Quests.description
-    Search.feat_adventure = Quests.feat_adventure
-    Search.feat_dirty = Quests.feat_dirty
-    Search.feat_drama = Quests.feat_drama
-    Search.feat_horror = Quests.feat_horror
-    Search.feat_intelligent = Quests.feat_intelligent
-    Search.feat_logic = Quests.feat_logic
-    Search.feat_silly = Quests.feat_silly
-    Search.feat_romantic = Quests.feat_romantic
-    Search.pref_adventure = searchform.adventure.data
-    Search.pref_dirty = searchform.dirty.data
-    Search.pref_drama = searchform.drama.data
-    Search.pref_horror = searchform.horror.data
-    Search.pref_intelligent = searchform.intelligent.data
-    Search.pref_logic = searchform.logic.data
-    Search.pref_silly = searchform.silly
-    Search.pref_romantic = searchform.romantic
-    Search.rating = np.where(
-        np.array(Search.pref_adventure) == 1, np.array(Search.rating) + np.array(Search.feat_adventure) * (-10), np.where(
-            np.array(Search.pref_adventure) == 2, np.array(Search.rating) + np.array(Search.feat_adventure) * (-5), np.where(
-                np.array(Search.pref_adventure) == 3, np.array(Search.rating) + np.array(Search.feat_adventure) * 1, np.where(
-                    np.array(Search.pref_adventure) == 4, np.array(Search.rating) + np.array(Search.feat_adventure) * 4, np.where(
-                        np.array(Search.pref_adventure) == 5, np.array(Search.rating) + np.array(Search.feat_adventure) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_dirty) == 1, np.array(Search.rating) + np.array(Search.feat_dirty) * (-10), np.where(
-            np.array(Search.pref_dirty) == 2, np.array(Search.rating) + np.array(Search.feat_dirty) * (-5), np.where(
-                np.array(Search.pref_dirty) == 3, np.array(Search.rating) + np.array(Search.feat_dirty) * 1, np.where(
-                    np.array(Search.pref_dirty) == 4, np.array(Search.rating) + np.array(Search.feat_dirty) * 4, np.where(
-                        np.array(Search.pref_dirty) == 5, np.array(Search.rating) + np.array(Search.feat_dirty) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_drama) == 1, np.array(Search.rating) + np.array(Search.feat_drama) * (-10), np.where(
-            np.array(Search.pref_drama) == 2, np.array(Search.rating) + np.array(Search.feat_drama) * (-5), np.where(
-                np.array(Search.pref_drama) == 3, np.array(Search.rating) + np.array(Search.feat_drama) * 1, np.where(
-                    np.array(Search.pref_drama) == 4, np.array(Search.rating) + np.array(Search.feat_drama) * 4, np.where(
-                        np.array(Search.pref_drama) == 5, np.array(Search.rating) + np.array(Search.feat_drama) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_horror) == 1, np.array(Search.rating) + np.array(Search.feat_horror) * (-10), np.where(
-            np.array(Search.pref_horror) == 2, np.array(Search.rating) + np.array(Search.feat_horror) * (-5), np.where(
-                np.array(Search.pref_horror) == 3, np.array(Search.rating) + np.array(Search.feat_horror) * 1, np.where(
-                    np.array(Search.pref_horror) == 4, np.array(Search.rating) + np.array(Search.feat_horror) * 4, np.where(
-                        np.array(Search.pref_horror) == 5, np.array(Search.rating) + np.array(Search.feat_horror) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_intelligent) == 1, np.array(Search.rating) + np.array(Search.feat_intelligent) * (-10), np.where(
-            np.array(Search.pref_intelligent) == 2, np.array(Search.rating) + np.array(Search.feat_intelligent) * (-5), np.where(
-                np.array(Search.pref_intelligent) == 3, np.array(Search.rating) + np.array(Search.feat_intelligent) * 1, np.where(
-                    np.array(Search.pref_intelligent) == 4, np.array(Search.rating) + np.array(Search.feat_intelligent) * 4, np.where(
-                        np.array(Search.pref_intelligent) == 5, np.array(Search.rating) + np.array(Search.feat_intelligent) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_logic) == 1, np.array(Search.rating) + np.array(Search.feat_logic) * (-10), np.where(
-            np.array(Search.pref_logic) == 2, np.array(Search.rating) + np.array(Search.feat_logic) * (-5), np.where(
-                np.array(Search.pref_logic) == 3, np.array(Search.rating) + np.array(Search.feat_logic) * 1, np.where(
-                    np.array(Search.pref_logic) == 4, np.array(Search.rating) + np.array(Search.feat_logic) * 4, np.where(
-                        np.array(Search.pref_logic) == 5, np.array(Search.rating) + np.array(Search.feat_logic) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_silly) == 1, np.array(Search.rating) + np.array(Search.feat_silly) * (-10), np.where(
-            np.array(Search.pref_silly) == 2, np.array(Search.rating) + np.array(Search.feat_silly) * (-5), np.where(
-                np.array(Search.pref_silly) == 3, np.array(Search.rating) + np.array(Search.feat_silly) * 1, np.where(
-                    np.array(Search.pref_silly) == 4, np.array(Search.rating) + np.array(Search.feat_silly) * 4, np.where(
-                        np.array(Search.pref_silly) == 5, np.array(Search.rating) + np.array(Search.feat_silly) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    Search.rating = np.where(
-        np.array(Search.pref_romantic) == 1, np.array(Search.rating) + np.array(Search.feat_romantic) * (-10), np.where(
-            np.array(Search.pref_romantic) == 2, np.array(Search.rating) + np.array(Search.feat_romantic) * (-5), np.where(
-                np.array(Search.pref_romantic) == 3, np.array(Search.rating) + np.array(Search.feat_romantic) * 1, np.where(
-                    np.array(Search.pref_romantic) == 4, np.array(Search.rating) + np.array(Search.feat_romantic) * 4, np.where(
-                        np.array(Search.pref_romantic) == 5, np.array(Search.rating) + np.array(Search.feat_romantic) * 7, np.array(Search.rating)
-                    )
-                )
-            )
-        )
-    )
-    quests = Search.query
-    if searchform.search.data != '':
-        quests = quests.filter(Search.name.like('%' + searchform.search.data + '%')
-                               .order_by(Search.rating.tostring()))
-    quests = quests.order_by(Search.rating.tostring()).all()
-    return render_template('search_results.html', quests=quests)
-
-
 # @app.route('/results')
 # def search_results():
 #     searchform = QuestSearchForm()
-#     quests = Quests.query
 #
-#     if searchform.validate_on_submit():
-#         quests = quests.filter(Quests.name.like('%' + searchform.search.data + '%'))
-#
-#     quests = quests.order_by(Quests.name).all()
+#     Search.name = Quests.name
+#     Search.description = Quests.description
+#     Search.feat_adventure = Quests.feat_adventure
+#     Search.feat_dirty = Quests.feat_dirty
+#     Search.feat_drama = Quests.feat_drama
+#     Search.feat_horror = Quests.feat_horror
+#     Search.feat_intelligent = Quests.feat_intelligent
+#     Search.feat_logic = Quests.feat_logic
+#     Search.feat_silly = Quests.feat_silly
+#     Search.feat_romantic = Quests.feat_romantic
+#     Search.pref_adventure = searchform.adventure.data
+#     Search.pref_dirty = searchform.dirty.data
+#     Search.pref_drama = searchform.drama.data
+#     Search.pref_horror = searchform.horror.data
+#     Search.pref_intelligent = searchform.intelligent.data
+#     Search.pref_logic = searchform.logic.data
+#     Search.pref_silly = searchform.silly
+#     Search.pref_romantic = searchform.romantic
+#     Search.rating = np.where(
+#         np.array(Search.pref_adventure) == 1, np.array(Search.rating) + np.array(Search.feat_adventure) * (-10), np.where(
+#             np.array(Search.pref_adventure) == 2, np.array(Search.rating) + np.array(Search.feat_adventure) * (-5), np.where(
+#                 np.array(Search.pref_adventure) == 3, np.array(Search.rating) + np.array(Search.feat_adventure) * 1, np.where(
+#                     np.array(Search.pref_adventure) == 4, np.array(Search.rating) + np.array(Search.feat_adventure) * 4, np.where(
+#                         np.array(Search.pref_adventure) == 5, np.array(Search.rating) + np.array(Search.feat_adventure) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_dirty) == 1, np.array(Search.rating) + np.array(Search.feat_dirty) * (-10), np.where(
+#             np.array(Search.pref_dirty) == 2, np.array(Search.rating) + np.array(Search.feat_dirty) * (-5), np.where(
+#                 np.array(Search.pref_dirty) == 3, np.array(Search.rating) + np.array(Search.feat_dirty) * 1, np.where(
+#                     np.array(Search.pref_dirty) == 4, np.array(Search.rating) + np.array(Search.feat_dirty) * 4, np.where(
+#                         np.array(Search.pref_dirty) == 5, np.array(Search.rating) + np.array(Search.feat_dirty) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_drama) == 1, np.array(Search.rating) + np.array(Search.feat_drama) * (-10), np.where(
+#             np.array(Search.pref_drama) == 2, np.array(Search.rating) + np.array(Search.feat_drama) * (-5), np.where(
+#                 np.array(Search.pref_drama) == 3, np.array(Search.rating) + np.array(Search.feat_drama) * 1, np.where(
+#                     np.array(Search.pref_drama) == 4, np.array(Search.rating) + np.array(Search.feat_drama) * 4, np.where(
+#                         np.array(Search.pref_drama) == 5, np.array(Search.rating) + np.array(Search.feat_drama) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_horror) == 1, np.array(Search.rating) + np.array(Search.feat_horror) * (-10), np.where(
+#             np.array(Search.pref_horror) == 2, np.array(Search.rating) + np.array(Search.feat_horror) * (-5), np.where(
+#                 np.array(Search.pref_horror) == 3, np.array(Search.rating) + np.array(Search.feat_horror) * 1, np.where(
+#                     np.array(Search.pref_horror) == 4, np.array(Search.rating) + np.array(Search.feat_horror) * 4, np.where(
+#                         np.array(Search.pref_horror) == 5, np.array(Search.rating) + np.array(Search.feat_horror) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_intelligent) == 1, np.array(Search.rating) + np.array(Search.feat_intelligent) * (-10), np.where(
+#             np.array(Search.pref_intelligent) == 2, np.array(Search.rating) + np.array(Search.feat_intelligent) * (-5), np.where(
+#                 np.array(Search.pref_intelligent) == 3, np.array(Search.rating) + np.array(Search.feat_intelligent) * 1, np.where(
+#                     np.array(Search.pref_intelligent) == 4, np.array(Search.rating) + np.array(Search.feat_intelligent) * 4, np.where(
+#                         np.array(Search.pref_intelligent) == 5, np.array(Search.rating) + np.array(Search.feat_intelligent) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_logic) == 1, np.array(Search.rating) + np.array(Search.feat_logic) * (-10), np.where(
+#             np.array(Search.pref_logic) == 2, np.array(Search.rating) + np.array(Search.feat_logic) * (-5), np.where(
+#                 np.array(Search.pref_logic) == 3, np.array(Search.rating) + np.array(Search.feat_logic) * 1, np.where(
+#                     np.array(Search.pref_logic) == 4, np.array(Search.rating) + np.array(Search.feat_logic) * 4, np.where(
+#                         np.array(Search.pref_logic) == 5, np.array(Search.rating) + np.array(Search.feat_logic) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_silly) == 1, np.array(Search.rating) + np.array(Search.feat_silly) * (-10), np.where(
+#             np.array(Search.pref_silly) == 2, np.array(Search.rating) + np.array(Search.feat_silly) * (-5), np.where(
+#                 np.array(Search.pref_silly) == 3, np.array(Search.rating) + np.array(Search.feat_silly) * 1, np.where(
+#                     np.array(Search.pref_silly) == 4, np.array(Search.rating) + np.array(Search.feat_silly) * 4, np.where(
+#                         np.array(Search.pref_silly) == 5, np.array(Search.rating) + np.array(Search.feat_silly) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     Search.rating = np.where(
+#         np.array(Search.pref_romantic) == 1, np.array(Search.rating) + np.array(Search.feat_romantic) * (-10), np.where(
+#             np.array(Search.pref_romantic) == 2, np.array(Search.rating) + np.array(Search.feat_romantic) * (-5), np.where(
+#                 np.array(Search.pref_romantic) == 3, np.array(Search.rating) + np.array(Search.feat_romantic) * 1, np.where(
+#                     np.array(Search.pref_romantic) == 4, np.array(Search.rating) + np.array(Search.feat_romantic) * 4, np.where(
+#                         np.array(Search.pref_romantic) == 5, np.array(Search.rating) + np.array(Search.feat_romantic) * 7, np.array(Search.rating)
+#                     )
+#                 )
+#             )
+#         )
+#     )
+#     quests = Search.query
+#     if searchform.search.data != '':
+#         quests = quests.filter(Search.name.like('%' + searchform.search.data + '%')
+#                                .order_by(Search.rating.tostring()))
+#     quests = quests.order_by(Search.rating.tostring()).all()
 #     return render_template('search_results.html', quests=quests)
+
+
+@app.route('/results')
+def search_results():
+    searchform = QuestSearchForm()
+    quests = Quests.query
+
+    if searchform.validate_on_submit():
+        quests = quests.filter(Quests.name.like('%' + searchform.search.data + '%'))
+
+    quests = quests.order_by(Quests.name).all()
+    return render_template('search_results.html', quests=quests)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -201,6 +201,7 @@ def save_picture(form_picture):
 @login_required
 def account():
     form = UpdateAccountForm()
+    group = Groups.query
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -222,18 +223,85 @@ def account():
         form.age.data = current_user.age
         form.about.data = current_user.about
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form)
+    return render_template('account.html', title='Account', image_file=image_file, form=form, group=group)
 
 
 @app.route('/user/<int:user_id>')
 def user(user_id):
     user = Users.query.get_or_404(user_id)
+    group = Groups.query
     image_file = url_for('static', filename='profile_pics/' + user.image_file)
-    return render_template('userpage.html', title=user.name, user=user, image_file=image_file)
+    return render_template('userpage.html', title=user.name, user=user, image_file=image_file, group=group)
 
 
 @app.route('/quest/<int:quest_id>')
 def quest(quest_id):
     quest = Quests.query.get_or_404(quest_id)
     image_file = url_for('static', filename='quest_pics/' + quest.image_file)
-    return render_template('questpage.html', title=quest.name, quest=quest, image_file=image_file)
+    return render_template('questpage.html', title=quest.name, quest=quest, image_file=image_file, quest_id=quest.id)
+
+
+@app.route('/quest/<int:quest_id>/befound', methods=['GET', 'POST'])
+@login_required
+def find_a_partner(quest_id):
+    quest = Quests.query.get_or_404(quest_id)
+    form = GroupForm()
+    if form.validate_on_submit():
+        group = Groups(gender=form.gender.data, agemin=form.agemin.data, agemax=form.agemax.data,
+                       initiator=current_user, quest_name=quest.name, quest_id=quest.id)
+        db.session.add(group)
+        db.session.commit()
+        flash('You successfully created a beacon, now chill out and wait for messages from others. Or try to find a party yourself', 'success')
+        return redirect(url_for('home'))
+    elif request.method == 'GET':
+        form.agemin.data = 1
+        form.agemax.data = 100
+    return render_template('create_beacon.html', title='Create a Beacon', form=form, quest=quest)
+
+
+# @app.route('/quest/<int:quest_id>/find', methods=['GET', 'POST'])
+# @login_required
+# def find_party:
+#     form = GroupForm
+#     form.agemin.data = 1
+#     form.agemax.data = 100
+#     if form.validate_on_submit():
+#         flash('You')
+#
+#
+# @app.route('/quest/<int:quest_id>/get/behold')
+# @login_required
+# def
+
+
+@app.route('/beacon<int:group_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_beacon(group_id):
+    form = GroupForm()
+    group = Groups.query.get_or_404(group_id)
+    if group.initiator != current_user:
+        abort(403)
+    if form.validate_on_submit():
+        group.gender = form.gender.data
+        group.agemin = form.agemin.data
+        group.agemax = form.agemax.data
+        db.session.commit()
+        flash('Changes have been saved', 'success')
+        return redirect(url_for('account', group_id=group.id))
+    elif request.method == 'GET':
+        form.gender.data = group.gender
+        form.agemin.data = group.agemin
+        form.agemax.data = group.agemax
+    return render_template('update_beacon.html', title='Beacon Update', form=form, group=group)
+
+
+@app.route('/beacon<int:group_id>/delete', methods=['POST'])
+@login_required
+def delete_beacon(group_id):
+    group = Groups.query.get_or_404(group_id)
+    if group.initiator != current_user:
+        abort(403)
+    db.session.delete(group)
+    db.session.commit()
+    flash('The beacon has been deleted', 'info')
+    return redirect(url_for('home'), group=group)

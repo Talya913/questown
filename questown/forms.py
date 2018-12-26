@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField, ValidationError, widgets, SelectField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField, ValidationError, widgets, SelectField, IntegerField, TextAreaField
 from questown.models import Users
 from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
@@ -67,7 +67,7 @@ class UpdateAccountForm(FlaskForm):
     age = IntegerField('Age (in years)', [
         validators.NumberRange(min=1, max=100)
     ])
-    about = StringField('About yourself', [
+    about = TextAreaField('About yourself', [
         validators.length(max=1000)
     ])
     picture = FileField('Update profile picture', validators=[FileAllowed(['jpg', 'png'])])
@@ -100,3 +100,20 @@ class QuestSearchForm(FlaskForm):
     silly = SelectField('Silly', choices=choice)
     search = StringField('Type a part of the title (if you want to)')
     submit = SubmitField('Search')
+
+
+class GroupForm(FlaskForm):
+    gender = SelectField('Gender',choices=[
+        ('---', '---'),
+        ('Male', 'Male'),
+        ('Female', 'Female')
+    ])
+    agemin = IntegerField('Age (min)', [
+        validators.NumberRange(min=1, max=100),
+        validators.data_required()
+    ])
+    agemax = IntegerField('Age (max)', [
+        validators.NumberRange(min=1, max=100),
+        validators.data_required()
+    ])
+    submit = SubmitField('Ready')
