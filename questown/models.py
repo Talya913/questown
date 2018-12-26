@@ -16,7 +16,7 @@ class Users(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.png')
     password = db.Column(db.String(40), nullable=False)
     gender = db.Column(db.String(10), default='---')
-    age = db.Column(db.Integer, default=1)
+    age = db.Column(db.Integer, default=20)
     about = db.Column(db.String(1000), default='I am new here and will write something about me soon.')
     groups = db.relationship('Groups', backref='initiator', lazy=True)
 
@@ -30,6 +30,7 @@ class Groups(db.Model):
     agemax = db.Column(db.Integer)
     init_age = db.Column(db.String(10))
     init_gender = db.Column(db.Integer)
+    init_name = db.Column(db.String(20))
     participants = db.Column(db.Integer, db.ForeignKey('users.id'), nullable='False')
 
 

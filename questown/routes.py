@@ -248,7 +248,7 @@ def find_a_partner(quest_id):
     if form.validate_on_submit():
         group = Groups(gender=form.gender.data, agemin=form.agemin.data, agemax=form.agemax.data,
                        initiator=current_user, quest_name=quest.name, quest_id=quest.id,
-                       init_age=current_user.age, init_gender=current_user.gender)
+                       init_age=current_user.age, init_gender=current_user.gender, init_name=current_user.name)
         db.session.add(group)
         db.session.commit()
         flash('You successfully created a beacon, now chill out and wait for messages from others. Or try to find a party yourself', 'success')
@@ -274,7 +274,7 @@ def find_party(quest_id):
 
 @app.route('/quest/<int:quest_id>/get/behold')
 @login_required
-def beacon_results():
+def beacon_results(quest_id):
     form = GroupForm()
     quest = Quests.query
     groups = Groups.filter(Groups.quest_id == quest.id)
@@ -309,7 +309,7 @@ def beacon_results():
                                    current_user.id != groups.participants)
 
     groups = groups.order_by(groups.id)
-    return render_template('beacon_results.html', groups=groups, form=form, quest_id=quest.id)
+    return render_template('beacon_results.html', groups=groups, form=form, quest=quest, quest_id=quest.id)
 
 
 @app.route('/beacon<int:group_id>/update', methods=['GET', 'POST'])
