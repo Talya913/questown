@@ -282,8 +282,8 @@ def beacon_results(quest_id):
                                form.agemin.data <= groups.init_age and
                                form.agemax.data >= groups.init_age and
                                groups.gender == current_user.gender and
-                               groups.agemin >= current_user.age and
-                               groups.agemax <= current_user.age and
+                               groups.agemin <= current_user.age and
+                               groups.agemax >= current_user.age and
                                current_user.id != groups.participants)
 
     groups = groups.order_by(groups.id)
