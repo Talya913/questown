@@ -3,6 +3,7 @@ from questown.forms import RegistrationForm, LoginForm, UpdateAccountForm, Quest
 from questown.models import Users, Quests, Search, Groups
 from questown import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
+from sqlalchemy import or_
 import numpy as np
 import secrets
 import os
@@ -144,7 +145,8 @@ def search_results():
     quests = Quests.query
 
     if searchform.validate_on_submit():
-        quests = quests.filter(Quests.name.like('%' + searchform.search.data + '%'))
+        quests = quests.filter(Quests.name.like('%' + searchform.search.data + '%') |
+                               Quests.description.like('%' + searchform.search.data + '%'))
 
     quests = quests.order_by(Quests.name).all()
     return render_template('search_results.html', quests=quests)
