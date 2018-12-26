@@ -270,19 +270,20 @@ def find_party(quest_id):
     return render_template('find_beacon.html', form=form, quest=quest)
 
 
-@app.route('/quest/<int:quest_id>/get/behold')
+@app.route('/quest/<int:quest_id>/behold')
 @login_required
 def beacon_results(quest_id):
-    form = GroupForm()
     quest = Quests.query
+    form = GroupForm()
+    groups = Groups.query
     if form.validate_on_submit():
-        groups = Groups..filter(Groups.quest_id == quest.id and
-                               form.gender.data == Groups.init_gender and
-                               form.agemin.data <= Groups.init_age and
-                               form.agemax.data >= Groups.init_age and
-                               Groups.gender == current_user.gender and
-                               Groups.agemin >= current_user.age and
-                               Groups.agemax <= current_user.age and
+        groups = groups.filter(groups.quest_id == quest.id and
+                               form.gender.data == groups.init_gender and
+                               form.agemin.data <= groups.init_age and
+                               form.agemax.data >= groups.init_age and
+                               groups.gender == current_user.gender and
+                               groups.agemin >= current_user.age and
+                               groups.agemax <= current_user.age and
                                current_user.id != groups.participants)
 
     groups = groups.order_by(groups.id)

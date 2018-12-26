@@ -109,7 +109,6 @@ class QuestSearchForm(FlaskForm):
 
 class GroupForm(FlaskForm):
     gender = SelectField('Gender',choices=[
-        ('---', '---'),
         ('Male', 'Male'),
         ('Female', 'Female')
     ])
