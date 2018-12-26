@@ -251,7 +251,7 @@ def beacon_results(quest_id):
     return render_template('beacon_results.html', groups=groups, form=form, quest=quest)
 
 
-@app.route('/beacon<int:group_id>/update', methods=['GET', 'POST'])
+@app.route('/beacon/<int:group_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_beacon(group_id):
     form = GroupForm()
@@ -272,7 +272,7 @@ def update_beacon(group_id):
     return render_template('update_beacon.html', title='Beacon Update', form=form, group=group)
 
 
-@app.route('/beacon<int:group_id>/delete', methods=['POST'])
+@app.route('/beacon/<int:group_id>/delete', methods=['POST'])
 @login_required
 def delete_beacon(group_id):
     group = Groups.query.get_or_404(group_id)

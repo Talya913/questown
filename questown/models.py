@@ -48,6 +48,7 @@ class Quests(db.Model):
     feat_dirty = db.Column(db.Integer)
     feat_romantic = db.Column(db.Integer)
     feat_drama = db.Column(db.Integer)
+    link = db.Column(db.String(50))
 
 
 class Search(db.Model):
