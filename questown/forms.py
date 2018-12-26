@@ -17,6 +17,11 @@ class RegistrationForm(FlaskForm):
         validators.data_required(),
         validators.email()
     ])
+    age = IntegerField('Age (in years)', [
+        validators.NumberRange(min=1, max=100)
+    ])
+    gender = SelectField('Gender',
+                         choices=[('Male', 'Male'), ('Female', 'Female')])
     password = PasswordField('Password', [
         validators.data_required(),
         validators.length(min=6, max=20)
@@ -63,7 +68,7 @@ class UpdateAccountForm(FlaskForm):
         validators.email()
     ])
     gender = SelectField('Gender',
-                         choices=[('---', '---'), ('Male', 'Male'), ('Female', 'Female')])
+                         choices=[('Male', 'Male'), ('Female', 'Female')])
     age = IntegerField('Age (in years)', [
         validators.NumberRange(min=1, max=100)
     ])

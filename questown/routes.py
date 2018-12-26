@@ -157,7 +157,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = Users(username=form.username.data, name=form.name.data, email=form.email.data, password=hashed_password)
+        user = Users(username=form.username.data, name=form.name.data, age=form.age.data, gender=form.gender.data,
+                     email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
@@ -274,37 +275,15 @@ def find_party(quest_id):
 def beacon_results(quest_id):
     form = GroupForm()
     quest = Quests.query
-    for groups in Groups:
-        filter(groups.quest_id == quest.id)
     if form.validate_on_submit():
-        if form.gender.data == '---' and groups.gender == '---':
-            groups = groups.filter(form.agemin.data <= groups.init_age and
-                                   form.agemax.data >= groups.init_age and
-                                   groups.agemin >= current_user.age and
-                                   groups.agemax <= current_user.age and
-                                   current_user != groups.initiator)
-        elif form.gender.data != '---' and groups.gender == '---':
-            groups = groups.filter(form.gender.data == groups.init_gender and
-                                   form.agemin.data <= groups.init_age and
-                                   form.agemax.data >= groups.init_age and
-                                   groups.agemin >= current_user.age and
-                                   groups.agemax <= current_user.age and
-                                   current_user != groups.initiator)
-        elif form.gender.data == '---' and groups.gender != '---':
-            groups = groups.filter(form.agemin.data <= groups.init_age and
-                                   form.agemax.data >= groups.init_age and
-                                   groups.gender == current_user.gender and
-                                   groups.agemin >= current_user.age and
-                                   groups.agemax <= current_user.age and
-                                   current_user.id != groups.participants)
-        elif form.gender.data != '---' and groups.gender != '---':
-            groups = groups.filter(form.gender.data == groups.init_gender and
-                                   form.agemin.data <= groups.initiator.age and
-                                   form.agemax.data >= current_user.age and
-                                   groups.gender == current_user.gender and
-                                   groups.agemin >= current_user.age and
-                                   groups.agemax <= current_user.age and
-                                   current_user.id != groups.participants)
+        groups = Groups..filter(Groups.quest_id == quest.id and
+                               form.gender.data == Groups.init_gender and
+                               form.agemin.data <= Groups.init_age and
+                               form.agemax.data >= Groups.init_age and
+                               Groups.gender == current_user.gender and
+                               Groups.agemin >= current_user.age and
+                               Groups.agemax <= current_user.age and
+                               current_user.id != groups.participants)
 
     groups = groups.order_by(groups.id)
     return render_template('beacon_results.html', groups=groups, form=form, quest=quest)
