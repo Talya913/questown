@@ -261,7 +261,8 @@ def find_a_partner(quest_id):
 
 @app.route('/quest/<int:quest_id>/find', methods=['GET', 'POST'])
 @login_required
-def find_party():
+def find_party(quest_id):
+    quest = Quests.query
     form = GroupForm()
     if form.validate_on_submit():
         return redirect(url_for('beacon_results'))
@@ -308,7 +309,7 @@ def beacon_results():
                                    current_user.id != groups.participants)
 
     groups = groups.order_by(groups.id)
-    return render_template('beacon_results.html', groups=groups, form=form)
+    return render_template('beacon_results.html', groups=groups, form=form, quest_id=quest.id)
 
 
 @app.route('/beacon<int:group_id>/update', methods=['GET', 'POST'])
