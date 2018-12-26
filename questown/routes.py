@@ -264,12 +264,9 @@ def find_a_partner(quest_id):
 def find_party(quest_id):
     quest = Quests.query
     form = GroupForm()
-    if form.validate_on_submit():
-        return redirect(url_for('beacon_results'))
-    elif request.method == 'GET':
-        form.agemin.data = 1
-        form.agemax.data = 100
-    return render_template('find_beacon.html', form=form)
+    if request.method == 'POST':
+        return beacon_results(quest_id)
+    return render_template('find_beacon.html', form=form, quest=quest)
 
 
 @app.route('/quest/<int:quest_id>/get/behold')
@@ -277,7 +274,8 @@ def find_party(quest_id):
 def beacon_results(quest_id):
     form = GroupForm()
     quest = Quests.query
-    groups = Groups.filter(Groups.quest_id == quest.id)
+    for groups in Groups:
+        filter(groups.quest_id == quest.id)
     if form.validate_on_submit():
         if form.gender.data == '---' and groups.gender == '---':
             groups = groups.filter(form.agemin.data <= groups.init_age and
@@ -309,7 +307,7 @@ def beacon_results(quest_id):
                                    current_user.id != groups.participants)
 
     groups = groups.order_by(groups.id)
-    return render_template('beacon_results.html', groups=groups, form=form, quest=quest, quest_id=quest.id)
+    return render_template('beacon_results.html', groups=groups, form=form, quest=quest)
 
 
 @app.route('/beacon<int:group_id>/update', methods=['GET', 'POST'])

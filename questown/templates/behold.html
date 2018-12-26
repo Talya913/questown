@@ -9,11 +9,11 @@
 
     {% for group in groups %}
         <img src="{{ url_for('static', filename='profile_pics/' + group.initiator.image_file) }}">
-        <a href="">{{ group.initiator.username }}</a>
-        {{ group.initiator.name }}
-        {{ group.initiator.age }}
-        {{ group.initiator.gender }}
-        {{ group.initiator.about }}
+        <a href="">{{ group.init_name }}</a>
+        {{ group.init_name }}
+        {{ group.init_age }}
+        {{ group.init_gender }}
+        {{ group.init_about }}
     {% endfor %}
 </body>
 </html>
