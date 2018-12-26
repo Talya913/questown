@@ -201,7 +201,6 @@ def save_picture(form_picture):
 @login_required
 def account():
     form = UpdateAccountForm()
-    group = Groups.query
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -223,7 +222,7 @@ def account():
         form.age.data = current_user.age
         form.about.data = current_user.about
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form, group=group)
+    return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 
 @app.route('/user/<int:user_id>')
@@ -248,7 +247,8 @@ def find_a_partner(quest_id):
     form = GroupForm()
     if form.validate_on_submit():
         group = Groups(gender=form.gender.data, agemin=form.agemin.data, agemax=form.agemax.data,
-                       initiator=current_user, quest_name=quest.name, quest_id=quest.id)
+                       initiator=current_user, quest_name=quest.name, quest_id=quest.id,
+                       init_age=current_user.age, init_gender=current_user.gender)
         db.session.add(group)
         db.session.commit()
         flash('You successfully created a beacon, now chill out and wait for messages from others. Or try to find a party yourself', 'success')
@@ -259,19 +259,56 @@ def find_a_partner(quest_id):
     return render_template('create_beacon.html', title='Create a Beacon', form=form, quest=quest)
 
 
-# @app.route('/quest/<int:quest_id>/find', methods=['GET', 'POST'])
-# @login_required
-# def find_party:
-#     form = GroupForm
-#     form.agemin.data = 1
-#     form.agemax.data = 100
-#     if form.validate_on_submit():
-#         flash('You')
-#
-#
-# @app.route('/quest/<int:quest_id>/get/behold')
-# @login_required
-# def
+@app.route('/quest/<int:quest_id>/find', methods=['GET', 'POST'])
+@login_required
+def find_party():
+    form = GroupForm()
+    if form.validate_on_submit():
+        return redirect(url_for('beacon_results'))
+    elif request.method == 'GET':
+        form.agemin.data = 1
+        form.agemax.data = 100
+    return render_template('find_beacon.html', form=form)
+
+
+@app.route('/quest/<int:quest_id>/get/behold')
+@login_required
+def beacon_results():
+    form = GroupForm()
+    quest = Quests.query
+    groups = Groups.filter(Groups.quest_id == quest.id)
+    if form.validate_on_submit():
+        if form.gender.data == '---' and groups.gender == '---':
+            groups = groups.filter(form.agemin.data <= groups.init_age and
+                                   form.agemax.data >= groups.init_age and
+                                   groups.agemin >= current_user.age and
+                                   groups.agemax <= current_user.age and
+                                   current_user != groups.initiator)
+        elif form.gender.data != '---' and groups.gender == '---':
+            groups = groups.filter(form.gender.data == groups.init_gender and
+                                   form.agemin.data <= groups.init_age and
+                                   form.agemax.data >= groups.init_age and
+                                   groups.agemin >= current_user.age and
+                                   groups.agemax <= current_user.age and
+                                   current_user != groups.initiator)
+        elif form.gender.data == '---' and groups.gender != '---':
+            groups = groups.filter(form.agemin.data <= groups.init_age and
+                                   form.agemax.data >= groups.init_age and
+                                   groups.gender == current_user.gender and
+                                   groups.agemin >= current_user.age and
+                                   groups.agemax <= current_user.age and
+                                   current_user.id != groups.participants)
+        elif form.gender.data != '---' and groups.gender != '---':
+            groups = groups.filter(form.gender.data == groups.init_gender and
+                                   form.agemin.data <= groups.initiator.age and
+                                   form.agemax.data >= current_user.age and
+                                   groups.gender == current_user.gender and
+                                   groups.agemin >= current_user.age and
+                                   groups.agemax <= current_user.age and
+                                   current_user.id != groups.participants)
+
+    groups = groups.order_by(groups.id)
+    return render_template('beacon_results.html', groups=groups, form=form)
 
 
 @app.route('/beacon<int:group_id>/update', methods=['GET', 'POST'])
@@ -304,4 +341,4 @@ def delete_beacon(group_id):
     db.session.delete(group)
     db.session.commit()
     flash('The beacon has been deleted', 'info')
-    return redirect(url_for('home'), group=group)
+    return redirect(url_for('account'))

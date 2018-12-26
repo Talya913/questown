@@ -99,7 +99,7 @@
                 {% endif %}
             </div>
             {% for group in groups %}
-                {% if group.initiator == current_user.id %}
+                {% if group.initiator == current_user %}
             <a href="{{ url_for('update_beacon', group_id=group.id) }}">{{ group.quest_name }}</a>
                 {% endif %}
             {% endfor %}

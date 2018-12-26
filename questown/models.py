@@ -28,6 +28,8 @@ class Groups(db.Model):
     gender = db.Column(db.String(10), default='---')
     agemin = db.Column(db.Integer)
     agemax = db.Column(db.Integer)
+    init_age = db.Column(db.String(10))
+    init_gender = db.Column(db.Integer)
     participants = db.Column(db.Integer, db.ForeignKey('users.id'), nullable='False')
 
 
