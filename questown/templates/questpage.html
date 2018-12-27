@@ -32,14 +32,14 @@
             <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
         {% endif %}
     </ul>
-
-    <h1>{{ quest.name }}</h1>
-
-    <p>{{ quest.description }}</p>
-
-    <p>{{ quest.genres }}</p>
-            <a href="/quest/{{quest.id}}/find">Find Party</a>
-            <a href="/quest/{{quest.id}}/befound">Create a Beacon</a>
-
+    <div class="offset-md-1">
+        <img src="{{ image_file }}" height="180" width="240">
+        <a href="{{quest.link}}"><h1>{{ quest.name }}</h1></a>
+        <p>{{ quest.description }}</p>
+        <p>Address: {{ quest.address }}</p>
+        <p></p>
+        <a class="btn btn-secondary btn-sm m-1" href="/quest/{{quest.id}}/find">Find a Party</a>
+        <a class="btn btn-secondary btn-sm m-1" href="/quest/{{quest.id}}/befound">Create a Beacon</a>
+    </div>
 </body>
 </html>

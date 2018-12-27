@@ -23,7 +23,7 @@
         </div>
     </main>
 
-    <div class = "content-section">
+    <div class = "content-section col-md-8 offset-md-1">
         <form method = "POST" action = "">
             {{ form.hidden_tag() }}
             <fieldset class = "form-group">
@@ -107,7 +107,7 @@
             </div>
         </form>
     </div>
-    <div class = "vorder-top pt-3">
+    <div class = "vorder-top pt-3 col-md-8 offset-md-2">
         <small class = "text-muted">
             Already joined? <a class = "ml-2" href = "{{ url_for('login') }}">Sign In!</a>
         </small>

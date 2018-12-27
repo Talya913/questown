@@ -7,13 +7,43 @@
 </head>
 <body>
 
-    {% for group in groups %}
-        <img src="{{ url_for('static', filename='profile_pics/' + group.initiator.image_file) }}">
-        <a href="">{{ group.init_name }}</a>
-        {{ group.init_name }}
-        {{ group.init_age }}
-        {{ group.init_gender }}
-        {{ group.init_about }}
-    {% endfor %}
+    <div class="alert alert-primary" align="center" role="alert" >
+        <a href = "{{ url_for('home') }}"><strong>QUESTOWN</strong></a>
+    </div>
+
+    <main role="main" class="container">
+        <div class="row">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </main>
+
+    <ul>
+        {% if current_user.is_authenticated %}
+            <li><a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('logout') }}">Log out</a></li>
+        {% else %}
+            <li><a class="nav-item nav-link" href="{{ url_for('login') }}">Log in</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+    </ul>
+    {% if groups %}
+        {% for group in groups %}
+            <img src="{{ url_for('static', filename='profile_pics/' + group.initiator.image_file) }}" height="60" width="80" >
+            <a href="{{ url_for('userpage', user_id = group.participants) }}">{{ group.init_name }}</a>
+            {{ group.init_name }}
+            {{ group.init_age }}
+            {{ group.init_gender }}
+            {{ group.init_about }}
+        {% endfor %}
+    {% else %}
+    <h1>Sorry, no beacons were found.</h1>
+    <br><h5>Please, <a href="{{ url_for('find_party', quest_id=group.quest_id) }}"> modify your query</a> or <a href="{{ url_for('find_a_partner', quest_id=group.quest_id) }}">create a new beacon</a>.</h5></br>
+    {% endif %}
 </body>
 </html>

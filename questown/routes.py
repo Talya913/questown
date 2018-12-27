@@ -108,7 +108,7 @@ def search_results():
                                Quests.description.like('%' + searchform.search.data + '%'))
 
     quests = quests.order_by(Quests.name).all()
-    return render_template('search_results.html', quests=quests)
+    return render_template('search_results.html', quests=quests, title='Search')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -231,7 +231,7 @@ def find_party(quest_id):
     elif request.method == 'GET':
         form.agemin.data = 1
         form.agemax.data = 100
-    return render_template('find_beacon.html', form=form, quest=quest)
+    return render_template('find_beacon.html', form=form, quest=quest, title='Find')
 
 
 @app.route('/quest/<int:quest_id>/behold')
@@ -251,7 +251,7 @@ def beacon_results(quest_id):
                                current_user.id != Groups.participants)
 
     groups = groups.order_by(Groups.id)
-    return render_template('beacon_results.html', groups=groups, form=form, quest=quest)
+    return render_template('behold.html', groups=groups, form=form, quest=quest, title='Beacons')
 
 
 @app.route('/beacon/<int:group_id>/update', methods=['GET', 'POST'])

@@ -33,53 +33,57 @@
         {% endif %}
     </ul>
 
-    <div style="text-align: center;"><h1>Найди лучший квест!</h1></div>
+    <div style="text-align: center;"><h1>Gotta find them all!</h1></div>
 
-    <div style="text-align: center;"><p1>Расскажи нам о своих предпочтениях и наша сверхточная нейронная система, обученная британскими учеными выдаст тебе самые лучшие результаты. Поехали!</p1></div>
+    <div style="text-align: center;"><p2>But select only the best-suited ones
+        <br>So, tell us about your preferences, and we'll figure something out</br></p2>
+    </div>
+    <p></p>
 
     <div class = "content-section">
-        <form method = "POST" action = "">
+        <form method = "POST" action = "" style="font-family: 'PT Sans Caption'; text-align: center;">
             {{ form.hidden_tag() }}
             <fieldset class = "form-group">
-                <legend class = "border-bottom mb-4">Join us!</legend>
-                <div class = "form-group">
+                <legend><h6>Define your preferences towards quest categories
+                    <br>(1 - very negative, 5 - very positive)</h6></br></legend>
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.adventure.label(class = "form-control-label") }}
                     {{ form.adventure(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.dirty.label(class = "form-control-label") }}
                     {{ form.dirty(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.drama.label(class = "form-control-label") }}
                     {{ form.drama(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.horror.label(class = "form-control-label") }}
                     {{ form.horror(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.intelligent.label(class = "form-control-label") }}
                     {{ form.intelligent(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.logic.label(class = "form-control-label") }}
                     {{ form.logic(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.romantic.label(class = "form-control-label") }}
                     {{ form.romantic(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-4 offset-md-4">
                     {{ form.silly.label(class = "form-control-label") }}
                     {{ form.silly(class = "form-control form-control-lg") }}
                 </div>
-                <div class = "form-group">
+                <div class = "form-group col-md-8 offset-md-2">
                     {{ form.search.label(class = "form-control-label") }}
                     {{ form.search(class = "form-control form-control-lg") }}
                 </div>
             </fieldset>
-            <div class = "form-group">
+            <div class = "form-group col-md-4 offset-md-4">
                 {{ form.submit(class = "btn btn-outline-info") }}
             </div>
         </form>

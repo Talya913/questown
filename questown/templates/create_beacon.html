@@ -7,16 +7,35 @@
 </head>
 <body>
 
-    {% if current_user.is_authenticated %}
-        <li><a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a></li>
-        <li><a class="nav-item nav-link" href="{{ url_for('logout') }}">Log out</a></li>
-    {% else %}
-        <li><a class="nav-item nav-link" href="{{ url_for('login') }}">Log in</a></li>
-        <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
-    {% endif %}
+    <div class="alert alert-primary" align="center" role="alert" >
+        <a href = "{{ url_for('home') }}"><strong>QUESTOWN</strong></a>
+    </div>
 
-    <div class = "content-section">
+    <main role="main" class="container">
+        <div class="row">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </main>
+
+    <ul>
+        {% if current_user.is_authenticated %}
+            <li><a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('logout') }}">Log out</a></li>
+        {% else %}
+            <li><a class="nav-item nav-link" href="{{ url_for('login') }}">Log in</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+    </ul>
+
+    <div class = "content-section col-md-4 offset-md-4">
         <form method = "POST" action = "">
+
             {{ form.hidden_tag() }}
             <fieldset class = "form-group">
                 <legend class = "border-bottom mb-4">Let the party find you</legend>

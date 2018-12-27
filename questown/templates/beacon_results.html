@@ -2,15 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Questown - {{ title }}</title>
 </head>
 <body>
+
+    <div class="alert alert-primary" align="center" role="alert" >
+        <a href = "{{ url_for('home') }}"><strong>QUESTOWN</strong></a>
+    </div>
+
+    <main role="main" class="container">
+        <div class="row">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </main>
+
+    <ul>
+        {% if current_user.is_authenticated %}
+            <li><a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('logout') }}">Log out</a></li>
+        {% else %}
+            <li><a class="nav-item nav-link" href="{{ url_for('login') }}">Log in</a></li>
+            <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+    </ul>
 
     Search results
         <ul>
             {% for group in groups %}
             <li>
-                <h4><a href="#">{{ group.init_name }}</a></h4>
+                <h4><a href="{{ url_for('userpage', user_id = group.participants) }}">{{ group.init_name }}</a></h4>
+                <h5>Gender: {{ group.init_gender }} Age: {{ group.initial.age }}</h5>
             </li>
             {% endfor %}
         </ul>

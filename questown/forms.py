@@ -103,7 +103,7 @@ class QuestSearchForm(FlaskForm):
     logic = SelectField('Logic', choices=choice)
     romantic = SelectField('Romantic', choices=choice)
     silly = SelectField('Silly', choices=choice)
-    search = StringField('Type a part of the title (if you want to)')
+    search = StringField('Type here if you are looking for something specific')
     submit = SubmitField('Search')
 
 
