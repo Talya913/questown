@@ -33,25 +33,17 @@
         {% endif %}
     </ul>
 
-    <ul>
-        {% if current_user.is_authenticated %}
-            <li><a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a></li>
-            <li><a class="nav-item nav-link" href="{{ url_for('logout') }}">Log out</a></li>
-        {% else %}
-            <li><a class="nav-item nav-link" href="{{ url_for('login') }}">Log in</a></li>
-            <li><a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a></li>
-        {% endif %}
-    </ul>
-
     {% if quests %}
-        <h1>Search results</h1>
-        <ul>
-            {% for quest in quests %}
-            <li>
-                <h5><a href="/quest/{{quest.id}}">{{ quest.name }}</a></h5>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="offset-md-1">
+            <h1>Search results</h1>
+            <ul>
+                {% for quest in quests %}
+                <li>
+                    <h5><a href="/quest/{{quest.id}}">{{ quest.name }}</a></h5>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
         <h1>Sorry, no quests found</h1>
     {% endif %}
