@@ -228,6 +228,9 @@ def find_party(quest_id):
     form = GroupForm()
     if request.method == 'POST':
         return beacon_results(quest_id)
+    elif request.method == 'GET':
+        form.agemin.data = 1
+        form.agemax.data = 100
     return render_template('find_beacon.html', form=form, quest=quest)
 
 
@@ -238,16 +241,16 @@ def beacon_results(quest_id):
     form = GroupForm()
     groups = Groups.query
     if form.validate_on_submit():
-        groups = groups.filter(groups.quest_id == quest.id and
-                               form.gender.data == groups.init_gender and
-                               form.agemin.data <= groups.init_age and
-                               form.agemax.data >= groups.init_age and
-                               groups.gender == current_user.gender and
-                               groups.agemin <= current_user.age and
-                               groups.agemax >= current_user.age and
-                               current_user.id != groups.participants)
+        groups = groups.filter(Groups.quest_id == Quests.id,
+                               form.gender.data == Groups.init_gender,
+                               form.agemin.data <= Groups.init_age,
+                               form.agemax.data >= Groups.init_age,
+                               Groups.gender == current_user.gender,
+                               Groups.agemin <= current_user.age,
+                               Groups.agemax >= current_user.age,
+                               current_user.id != Groups.participants)
 
-    groups = groups.order_by(groups.id)
+    groups = groups.order_by(Groups.id)
     return render_template('beacon_results.html', groups=groups, form=form, quest=quest)
 
 

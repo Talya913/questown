@@ -7,17 +7,13 @@
 <body>
 
     Search results
-    {% if groups %}
         <ul>
             {% for group in groups %}
             <li>
-            <h4><a href="#">{{ group.init_name }}</a>
+                <h4><a href="#">{{ group.init_name }}</a></h4>
             </li>
             {% endfor %}
         </ul>
-    {% else %}
-    Sorry, no party found (create one)
-    {% endif }
 
 </body>
 </html>
